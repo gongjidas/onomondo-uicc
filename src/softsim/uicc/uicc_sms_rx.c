@@ -240,6 +240,7 @@ static int handle_sm(struct ss_context *ctx, struct ss_sm_hdr *sm_hdr, uint8_t *
 	}
 
 	switch (ieia) {
+#ifndef CONFIG_DISABLE_OTA
 	case IEI_CPI:;
 		struct ss_buf *sms_response = NULL;
 		rc = ss_uicc_remote_cmd_receive(tp_ud_len, tp_ud, response_len, response, &sms_response,
@@ -272,6 +273,7 @@ static int handle_sm(struct ss_context *ctx, struct ss_sm_hdr *sm_hdr, uint8_t *
 			ss_buf_free(sms_response);
 		}
 		break;
+#endif // CONFIG_DISABLE_OTA
 	default:
 		SS_LOGP(SSMS, LDEBUG, "received sms TP-UD with unknown IEIa=%02x:%s\n", ieia,
 			ss_hexdump(tp_ud, tp_ud_len));
